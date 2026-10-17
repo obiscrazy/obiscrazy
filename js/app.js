@@ -12,8 +12,8 @@ const ICON = {
 
 const LICENCES = [
   { id: 'basic',
-    fr: { name: 'Basic Lease', feats: ['Fichier MP3', "Jusqu'à 100 000 streams", 'Droits non exclusifs', 'Crédit « Prod. Obis Crazy » obligatoire'] },
-    en: { name: 'Basic Lease', feats: ['MP3 file', 'Up to 100,000 streams', 'Non-exclusive rights', '"Prod. Obis Crazy" credit required'] } },
+    fr: { name: 'Basic Lease', feats: ['Fichier MP3', "Jusqu'à 100 000 streams", 'Droits non exclusifs', 'Crédit « Prod. obiscrazy » obligatoire'] },
+    en: { name: 'Basic Lease', feats: ['MP3 file', 'Up to 100,000 streams', 'Non-exclusive rights', '"Prod. obiscrazy" credit required'] } },
   { id: 'premium',
     fr: { name: 'Premium Lease', feats: ['MP3 + WAV', "Jusqu'à 500 000 streams", 'Utilisation en clip vidéo', 'Usage commercial', 'Crédit obligatoire'] },
     en: { name: 'Premium Lease', feats: ['MP3 + WAV', 'Up to 500,000 streams', 'Music video use', 'Commercial use', 'Credit required'] } },
@@ -55,8 +55,8 @@ const I18N = {
     'cart.momo': 'Payer en Mobile Money (WhatsApp)', 'cart.paypal': 'Payer avec PayPal',
     'cart.note': 'Orange Money, Moov Money ou Wave : on te répond sur WhatsApp avec le numéro de paiement, puis on t\'envoie tes fichiers et ton contrat.',
     'cart.added': 'Ajouté au panier', 'cart.need': 'Indique ton nom et ton email.', 'cart.nopaypal': 'PayPal bientôt disponible.',
-    'msg.order': 'Bonjour Obis Crazy, je souhaite acheter :', 'msg.total': 'Total', 'msg.name': 'Nom', 'msg.email': 'Email', 'msg.pay': 'Paiement',
-    'msg.custom': 'Bonjour Obis Crazy, demande de beat sur mesure :', 'msg.studio': 'Bonjour Obis Crazy, je veux réserver une session studio :',
+    'msg.order': 'Bonjour obiscrazy, je souhaite acheter :', 'msg.total': 'Total', 'msg.name': 'Nom', 'msg.email': 'Email', 'msg.pay': 'Paiement',
+    'msg.custom': 'Bonjour obiscrazy, demande de beat sur mesure :', 'msg.studio': 'Bonjour obiscrazy, je veux réserver une session studio :',
     'msg.nopreview': 'Preview indisponible'
   },
   en: {
@@ -88,8 +88,8 @@ const I18N = {
     'cart.momo': 'Pay with Mobile Money (WhatsApp)', 'cart.paypal': 'Pay with PayPal',
     'cart.note': 'Orange Money, Moov Money or Wave: we reply on WhatsApp with the payment number, then send your files and contract.',
     'cart.added': 'Added to cart', 'cart.need': 'Enter your name and email.', 'cart.nopaypal': 'PayPal coming soon.',
-    'msg.order': 'Hello Obis Crazy, I want to buy:', 'msg.total': 'Total', 'msg.name': 'Name', 'msg.email': 'Email', 'msg.pay': 'Payment',
-    'msg.custom': 'Hello Obis Crazy, custom beat request:', 'msg.studio': 'Hello Obis Crazy, I want to book a studio session:',
+    'msg.order': 'Hello obiscrazy, I want to buy:', 'msg.total': 'Total', 'msg.name': 'Name', 'msg.email': 'Email', 'msg.pay': 'Payment',
+    'msg.custom': 'Hello obiscrazy, custom beat request:', 'msg.studio': 'Hello obiscrazy, I want to book a studio session:',
     'msg.nopreview': 'Preview unavailable'
   }
 };
