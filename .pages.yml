@@ -1,0 +1,73 @@
+media:
+  input: media
+  output: /media
+
+content:
+  - name: beats
+    label: Beats
+    type: file
+    path: data/beats.json
+    format: json
+    list: true
+    fields:
+      - name: title
+        label: Titre
+        type: string
+        required: true
+      - name: bpm
+        label: BPM
+        type: number
+      - name: key
+        label: Tonalité
+        type: string
+      - name: genre
+        label: Genre
+        type: select
+        options:
+          values: [Afrobeats, Drill, Trap, Hoodtrap, Hip-hop]
+      - name: tags
+        label: Tags (ex. Burna Boy type beat)
+        type: string
+        list: true
+      - name: cover
+        label: Cover (carrée, JPG)
+        type: image
+      - name: preview
+        label: Preview taguée (MP3)
+        type: file
+      - name: featured
+        label: À la une
+        type: boolean
+      - name: sold
+        label: Vendu en exclusif (le cacher)
+        type: boolean
+      - name: date
+        label: Date de sortie
+        type: date
+
+  - name: site
+    label: Réglages du site
+    type: file
+    path: data/site.json
+    format: json
+    fields:
+      - { name: whatsapp, label: "Numéro WhatsApp (ex. 22376000000)", type: string }
+      - { name: email, label: Email, type: string }
+      - { name: paypal, label: "Nom PayPal.me (vide si pas encore)", type: string }
+      - { name: instagram, label: Lien Instagram, type: string }
+      - { name: youtube, label: Lien YouTube, type: string }
+      - { name: tiktok, label: Lien TikTok, type: string }
+      - name: prices
+        label: Prix des licences (FCFA)
+        type: object
+        fields:
+          - { name: basic, label: Basic, type: number }
+          - { name: premium, label: Premium, type: number }
+          - { name: unlimited, label: Unlimited, type: number }
+          - { name: exclusive, label: Exclusive, type: number }
+      - name: rates
+        label: Taux de change (1 EUR / 1 USD en FCFA)
+        type: object
+        fields:
+          - { name: EUR, type: number }
+          - { name: USD, type: number }
