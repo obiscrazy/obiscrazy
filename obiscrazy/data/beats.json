@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Exemple Afro",
+    "bpm": 104,
+    "key": "F#m",
+    "genre": "Afrobeats",
+    "tags": ["Burna Boy type beat"],
+    "cover": "/media/exemple.jpg",
+    "preview": "/media/exemple.mp3",
+    "featured": true,
+    "sold": false,
+    "date": "2026-10-16"
+  }
+]
