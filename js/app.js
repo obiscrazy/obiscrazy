@@ -29,7 +29,7 @@ const I18N = {
   fr: {
     'nav.beats': 'Beats', 'nav.licences': 'Licences', 'nav.custom': 'Sur mesure', 'nav.studio': 'Studio', 'nav.contact': 'Contact',
     'hero.eyebrow': 'Beats premium · Licences instantanées',
-    'hero.title': 'Des beats qui<br><span class="gold-text">frappent fort.</span>',
+    'hero.title': 'The crazy<br><span class="gold-text">beatmaker.</span>',
     'hero.sub': 'Afrobeats, Drill, Trap, Hoodtrap et Hip-hop. Paiement par Orange Money, Moov Money, Wave, carte ou PayPal.',
     'hero.cta1': 'Écouter les beats', 'hero.cta2': 'Voir les licences',
     'hero.stat1': 'Beats', 'hero.stat2': 'Genres', 'hero.stat3': 'Licences',
@@ -62,7 +62,7 @@ const I18N = {
   en: {
     'nav.beats': 'Beats', 'nav.licences': 'Licenses', 'nav.custom': 'Custom', 'nav.studio': 'Studio', 'nav.contact': 'Contact',
     'hero.eyebrow': 'Premium beats · Instant licensing',
-    'hero.title': 'Beats that<br><span class="gold-text">hit hard.</span>',
+    'hero.title': 'The crazy<br><span class="gold-text">beatmaker.</span>',
     'hero.sub': 'Afrobeats, Drill, Trap, Hoodtrap and Hip-hop. Pay with Orange Money, Moov Money, Wave, card or PayPal.',
     'hero.cta1': 'Listen to beats', 'hero.cta2': 'See licenses',
     'hero.stat1': 'Beats', 'hero.stat2': 'Genres', 'hero.stat3': 'Licenses',
