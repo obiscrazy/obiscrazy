@@ -1,10 +1,17 @@
 {
-  "whatsapp": "22300000000",
-  "email": "contact@obiscrazy.com",
-  "paypal": "",
-  "instagram": "",
-  "youtube": "",
-  "tiktok": "",
-  "prices": { "basic": 15000, "premium": 30000, "unlimited": 100000, "exclusive": 400000 },
-  "rates": { "EUR": 655.957, "USD": 570 }
+  "whatsapp": "22362049859",
+  "email": "obiscrazy@gmail.com",
+  "instagram": "https://www.instagram.com/obiscrazy?cplk=c3EzOXFhZGs5bnBq&utm_source=qr",
+  "youtube": "https://youtube.com/@obiscrazy?si=TXcj4eHgqeBeiys6",
+  "tiktok": "https://www.tiktok.com/@obiscrazy?_r=1&_t=ZS-9AdQhEGuTgq",
+  "prices": {
+    "basic": 15000,
+    "premium": 30000,
+    "unlimited": 100000,
+    "exclusive": 400000
+  },
+  "rates": {
+    "EUR": 655.957,
+    "USD": 570
+  }
 }
