@@ -14,5 +14,16 @@
     "featured": true,
     "sold": false,
     "date": "2026-10-16"
+  },
+  {
+    "title": "ADA",
+    "bpm": 103,
+    "key": "F minor",
+    "genre": "Afrobeats",
+    "cover": "/media/ADA.png",
+    "preview": "/media/ADA.mp3",
+    "featured": true,
+    "sold": false,
+    "date": "2026-10-20"
   }
 ]
