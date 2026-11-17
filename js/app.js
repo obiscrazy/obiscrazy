@@ -55,6 +55,7 @@ const I18N = {
     'cart.momo': 'Payer en Mobile Money (WhatsApp)', 'cart.paypal': 'Payer avec PayPal',
     'cart.note': 'Orange Money, Moov Money ou Wave : on te répond sur WhatsApp avec le numéro de paiement, puis on t\'envoie tes fichiers et ton contrat.',
     'cart.added': 'Ajouté au panier', 'cart.need': 'Indique ton nom et ton email.', 'cart.nopaypal': 'PayPal bientôt disponible.',
+    'cart.paydunya': 'Payer en ligne', 'cart.payerr': 'Paiement indisponible, réessaie ou utilise WhatsApp.', 'cart.exclusive': 'La licence Exclusive se négocie sur WhatsApp.',
     'msg.order': 'Bonjour obiscrazy, je souhaite acheter :', 'msg.total': 'Total', 'msg.name': 'Nom', 'msg.email': 'Email', 'msg.pay': 'Paiement',
     'msg.custom': 'Bonjour obiscrazy, demande de beat sur mesure :', 'msg.studio': 'Bonjour obiscrazy, je veux réserver une session studio :',
     'msg.nopreview': 'Preview indisponible'
@@ -88,6 +89,7 @@ const I18N = {
     'cart.momo': 'Pay with Mobile Money (WhatsApp)', 'cart.paypal': 'Pay with PayPal',
     'cart.note': 'Orange Money, Moov Money or Wave: we reply on WhatsApp with the payment number, then send your files and contract.',
     'cart.added': 'Added to cart', 'cart.need': 'Enter your name and email.', 'cart.nopaypal': 'PayPal coming soon.',
+    'cart.paydunya': 'Pay online', 'cart.payerr': 'Payment unavailable, try again or use WhatsApp.', 'cart.exclusive': 'The Exclusive license is negotiated on WhatsApp.',
     'msg.order': 'Hello obiscrazy, I want to buy:', 'msg.total': 'Total', 'msg.name': 'Name', 'msg.email': 'Email', 'msg.pay': 'Payment',
     'msg.custom': 'Hello obiscrazy, custom beat request:', 'msg.studio': 'Hello obiscrazy, I want to book a studio session:',
     'msg.nopreview': 'Preview unavailable'
@@ -320,6 +322,36 @@ function checkCart() {
   return true;
 }
 
+async function payWithPaydunya() {
+  if (!checkCart()) return;
+  if (state.cart.some(it => LICENCES.find(l => l.id === it.lic)?.exclusive)) {
+    toast(t('cart.exclusive'));
+    wa(orderText('Exclusive (négociation)'));
+    return;
+  }
+  const btn = $('#payPaydunya');
+  btn.disabled = true;
+  try {
+    const res = await fetch('/api/create-invoice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: $('#cName').value.trim(),
+        email: $('#cEmail').value.trim(),
+        items: state.cart.map(it => ({ title: it.title, lic: it.lic }))
+      })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.url) throw new Error(data.error || 'error');
+    localStorage.setItem('oc_last_invoice', data.token);
+    window.location.href = data.url;
+  } catch (err) {
+    console.error(err);
+    toast(t('cart.payerr'));
+    btn.disabled = false;
+  }
+}
+
 function formToWhatsApp(form, intro, prefix) {
   const lines = [...new FormData(form).entries()].filter(([, v]) => String(v).trim()).map(([k, v]) => `${t(prefix + k)} : ${v}`);
   wa([intro, ...lines].join('\n'));
@@ -382,6 +414,8 @@ function bind() {
     if (r) { state.cart.splice(+r.dataset.remove, 1); renderCart(); }
   };
   $('#payMomo').onclick = () => { if (checkCart()) wa(orderText('Mobile Money (Orange / Moov / Wave)')); };
+  $('#payMomo').insertAdjacentHTML('beforebegin', '<button class="btn btn--gold btn--block" id="payPaydunya" type="button" data-i18n="cart.paydunya"></button>');
+  $('#payPaydunya').onclick = payWithPaydunya;
   $('#payPaypal').onclick = () => {
     if (!checkCart()) return;
     const user = state.site.paypal;
