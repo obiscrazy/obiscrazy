@@ -8,9 +8,9 @@ export async function onRequestGet({ request, env }) {
   const base = env.PD_MODE === 'live' ? 'https://app.paydunya.com/api/v1' : 'https://app.paydunya.com/sandbox-api/v1';
   const res = await fetch(`${base}/checkout-invoice/confirm/${token}`, {
     headers: {
-      'PAYDUNYA-MASTER-KEY': env.PD_MASTER_KEY,
-      'PAYDUNYA-PRIVATE-KEY': env.PD_PRIVATE_KEY,
-      'PAYDUNYA-TOKEN': env.PD_TOKEN
+      'PAYDUNYA-MASTER-KEY': env.PD_MASTER_KEY.trim(),
+      'PAYDUNYA-PRIVATE-KEY': env.PD_PRIVATE_KEY.trim(),
+      'PAYDUNYA-TOKEN': env.PD_TOKEN.trim()
     }
   });
   const d = await res.json().catch(() => ({}));
