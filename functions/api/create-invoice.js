@@ -41,9 +41,9 @@ async function handle({ request, env }) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'PAYDUNYA-MASTER-KEY': env.PD_MASTER_KEY,
-      'PAYDUNYA-PRIVATE-KEY': env.PD_PRIVATE_KEY,
-      'PAYDUNYA-TOKEN': env.PD_TOKEN
+      'PAYDUNYA-MASTER-KEY': env.PD_MASTER_KEY.trim(),
+      'PAYDUNYA-PRIVATE-KEY': env.PD_PRIVATE_KEY.trim(),
+      'PAYDUNYA-TOKEN': env.PD_TOKEN.trim()
     },
     body: JSON.stringify({
       invoice: { items: invoiceItems, total_amount: total, description: 'Commande obiscrazy' },
