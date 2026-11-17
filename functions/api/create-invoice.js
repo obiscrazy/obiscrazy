@@ -3,7 +3,12 @@ const LIC = { basic: 'Basic Lease', premium: 'Premium Lease', unlimited: 'Unlimi
 const json = (o, status = 200) => new Response(JSON.stringify(o), { status, headers: { 'Content-Type': 'application/json' } });
 const load = async (env, req, path) => (await env.ASSETS.fetch(new Request(new URL(path, req.url)))).json();
 
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost(ctx) {
+  try { return await handle(ctx); }
+  catch (e) { console.error(e); return json({ error: 'server: ' + String(e.message || e).slice(0, 60) }, 500); }
+}
+
+async function handle({ request, env }) {
   if (!env.PD_MASTER_KEY || !env.PD_PRIVATE_KEY || !env.PD_TOKEN) return json({ error: 'config' }, 500);
   let body;
   try { body = await request.json(); } catch { return json({ error: 'bad_request' }, 400); }
@@ -50,7 +55,7 @@ export async function onRequestPost({ request, env }) {
   const data = await res.json().catch(() => ({}));
   if (data.response_code !== '00' || !data.response_text) {
     console.error('PayDunya error', data.response_code, data.response_text);
-    return json({ error: 'provider' }, 502);
+    return json({ error: 'provider ' + data.response_code + ' ' + String(data.response_text || '').slice(0, 60) }, 502);
   }
   return json({ url: data.response_text, token: data.token });
 }
