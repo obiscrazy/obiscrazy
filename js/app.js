@@ -55,7 +55,7 @@ const I18N = {
     'cart.momo': 'Payer en Mobile Money (WhatsApp)', 'cart.paypal': 'Payer avec PayPal',
     'cart.note': 'Orange Money, Moov Money ou Wave : on te répond sur WhatsApp avec le numéro de paiement, puis on t\'envoie tes fichiers et ton contrat.',
     'cart.added': 'Ajouté au panier', 'cart.need': 'Indique ton nom et ton email.', 'cart.nopaypal': 'PayPal bientôt disponible.',
-    'cart.paydunya': 'Payer en ligne', 'cart.payerr': 'Paiement indisponible, réessaie ou utilise WhatsApp.', 'cart.exclusive': 'La licence Exclusive se négocie sur WhatsApp.',
+    'cart.contact': 'Négocier sur WhatsApp', 'cart.paydunya': 'Payer en ligne', 'cart.payerr': 'Paiement indisponible, réessaie ou utilise WhatsApp.', 'cart.exclusive': 'La licence Exclusive se négocie sur WhatsApp.',
     'msg.order': 'Bonjour obiscrazy, je souhaite acheter :', 'msg.total': 'Total', 'msg.name': 'Nom', 'msg.email': 'Email', 'msg.pay': 'Paiement',
     'msg.custom': 'Bonjour obiscrazy, demande de beat sur mesure :', 'msg.studio': 'Bonjour obiscrazy, je veux réserver une session studio :',
     'msg.nopreview': 'Preview indisponible'
@@ -89,7 +89,7 @@ const I18N = {
     'cart.momo': 'Pay with Mobile Money (WhatsApp)', 'cart.paypal': 'Pay with PayPal',
     'cart.note': 'Orange Money, Moov Money or Wave: we reply on WhatsApp with the payment number, then send your files and contract.',
     'cart.added': 'Added to cart', 'cart.need': 'Enter your name and email.', 'cart.nopaypal': 'PayPal coming soon.',
-    'cart.paydunya': 'Pay online', 'cart.payerr': 'Payment unavailable, try again or use WhatsApp.', 'cart.exclusive': 'The Exclusive license is negotiated on WhatsApp.',
+    'cart.contact': 'Negotiate on WhatsApp', 'cart.paydunya': 'Pay online', 'cart.payerr': 'Payment unavailable, try again or use WhatsApp.', 'cart.exclusive': 'The Exclusive license is negotiated on WhatsApp.',
     'msg.order': 'Hello obiscrazy, I want to buy:', 'msg.total': 'Total', 'msg.name': 'Name', 'msg.email': 'Email', 'msg.pay': 'Payment',
     'msg.custom': 'Hello obiscrazy, custom beat request:', 'msg.studio': 'Hello obiscrazy, I want to book a studio session:',
     'msg.nopreview': 'Preview unavailable'
@@ -132,7 +132,7 @@ function money(xof) {
 function toast(msg) {
   const el = $('#toast');
   el.textContent = msg; el.classList.add('show');
-  clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('show'), 2200);
+  clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('show'), 4500);
 }
 
 function wa(text) {
@@ -224,6 +224,18 @@ function renderCart() {
     </div>`).join('') : `<p class="muted">${t('cart.empty')}</p>`;
   $('#cartTotal').textContent = money(total());
   localStorage.setItem('oc_cart', JSON.stringify(state.cart));
+  syncPayButtons();
+}
+
+// Exclusive : seulement le contact WhatsApp. Sinon : seulement le paiement en ligne.
+function syncPayButtons() {
+  const ex = state.cart.some(it => LICENCES.find(l => l.id === it.lic)?.exclusive);
+  const show = (el, on) => { if (el) el.style.display = on ? '' : 'none'; };
+  show($('#payPaydunya'), !ex);
+  show($('#payMomo'), ex);
+  show($('#payPaypal'), false);
+  show($('[data-i18n="cart.note"]'), false);
+  $('#payMomo').textContent = t('cart.contact');
 }
 
 function renderFooter() {
@@ -347,7 +359,7 @@ async function payWithPaydunya() {
     window.location.href = data.url;
   } catch (err) {
     console.error(err);
-    toast(t('cart.payerr'));
+    toast(t('cart.payerr') + ' [' + String(err.message || 'erreur').slice(0, 80) + ']');
     btn.disabled = false;
   }
 }
@@ -413,7 +425,7 @@ function bind() {
     const r = e.target.closest('[data-remove]');
     if (r) { state.cart.splice(+r.dataset.remove, 1); renderCart(); }
   };
-  $('#payMomo').onclick = () => { if (checkCart()) wa(orderText('Mobile Money (Orange / Moov / Wave)')); };
+  $('#payMomo').onclick = () => { if (checkCart()) wa(orderText('Exclusive (négociation)')); };
   $('#payMomo').insertAdjacentHTML('beforebegin', '<button class="btn btn--gold btn--block" id="payPaydunya" type="button" data-i18n="cart.paydunya"></button>');
   $('#payPaydunya').onclick = payWithPaydunya;
   $('#payPaypal').onclick = () => {
