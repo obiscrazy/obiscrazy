@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Merci - obiscrazy</title>
+<style>
+  body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0a0a0a;color:#fff;font-family:system-ui,-apple-system,sans-serif;text-align:center;padding:24px}
+  main{max-width:480px}
+  h1{font-size:2rem;margin:0 0 12px}
+  p{color:#bbb;line-height:1.6}
+  .btn{display:inline-block;margin:12px 6px 0;padding:14px 24px;border-radius:999px;background:#f0c53a;color:#000;font-weight:700;text-decoration:none}
+  .btn--ghost{background:none;color:#f0c53a;border:1px solid #f0c53a}
+  .btn[hidden]{display:none}
+</style>
+</head>
+<body>
+<main>
+  <h1 id="t">Vérification du paiement…</h1>
+  <p id="m"></p>
+  <a id="wa" class="btn" hidden target="_blank" rel="noopener">Recevoir mes fichiers sur WhatsApp</a>
+  <a href="/" class="btn btn--ghost">Retour au site</a>
+</main>
+<script>
+(async () => {
+  const $ = id => document.getElementById(id);
+  const show = (t, m) => { $('t').textContent = t; $('m').textContent = m; };
+  const token = new URLSearchParams(location.search).get('token') || localStorage.getItem('oc_last_invoice');
+  if (!token) return show("Aucune commande trouvée", "Retourne sur le site pour passer commande.");
+  try {
+    const d = await (await fetch('/api/confirm?token=' + encodeURIComponent(token))).json();
+    if (d.status === 'completed') {
+      localStorage.removeItem('oc_cart');
+      localStorage.removeItem('oc_last_invoice');
+      show("Paiement confirmé", `Merci ${d.name} ! Commande : ${d.order}. Écris-nous sur WhatsApp pour recevoir tes fichiers et ton contrat.`);
+      const site = await (await fetch('/data/site.json')).json();
+      const num = String(site.whatsapp || '').replace(/\D/g, '');
+      const txt = `Bonjour obiscrazy, j’ai payé ma commande (${d.order}). Réf : ${token}. Merci de m’envoyer mes fichiers.`;
+      if (num) { $('wa').href = `https://wa.me/${num}?text=${encodeURIComponent(txt)}`; $('wa').hidden = false; }
+    } else if (d.status === 'pending') {
+      show("Paiement en attente", "Ton paiement n’est pas encore confirmé. Recharge cette page dans un instant.");
+    } else {
+      show("Paiement non abouti", "Le paiement n’a pas été confirmé. Tu peux réessayer depuis ton panier.");
+    }
+  } catch (e) {
+    show("Vérification impossible", "Réessaie dans un instant ou contacte-nous sur WhatsApp.");
+  }
+})();
+</script>
+</body>
+</html>
